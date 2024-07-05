@@ -1,0 +1,198 @@
+CHAT APPLICATION PROTOCOL
+TUJUAN: melayani client dalam request chat aplikasi
+
+ATURAN PROTOKOL:
+- client harus mengirimkan request dalam bentuk string
+- string harus dalam format
+  REQUEST spasi PARAMETER
+- PARAMETER dapat berkembang menjadi PARAMETER1 spasi PARAMETER2 dan seterusnya
+
+REQUEST YANG DILAYANI:
+- informasi umum:
+  * Jika request tidak dikenali akan menghasilkan pesan
+    - status: ERROR
+    - data: request tidak dikenali
+  * Semua result akan diberikan dalam bentuk JSON dan diakhiri
+    dengan character ascii code #13#10#13#10 atau "\r\n\r\n"
+
+AUTH
+* TUJUAN: untuk autentikasi pengguna
+* PARAMETER:
+  - PARAMETER1 : username
+  - PARAMETER2 : password
+* RESULT:
+- BERHASIL:
+  - status: OK
+  - data: autentikasi berhasil
+- GAGAL:
+  - status: ERROR
+  - data: autentikasi gagal
+
+LOGOUT
+* TUJUAN: untuk keluar dari akun pengguna
+* PARAMETER: tidak ada
+* RESULT:
+- BERHASIL:
+  - status: OK
+  - data: logout berhasil
+- GAGAL:
+  - status: ERROR
+  - data: logout gagal
+
+SEND
+* TUJUAN: untuk mengirim pesan pribadi ke pengguna lain
+* PARAMETER:
+  - PARAMETER1 : username penerima
+  - PARAMETER2 : pesan
+* RESULT:
+- BERHASIL:
+  - status: OK
+  - data: pesan terkirim
+- GAGAL:
+  - status: ERROR
+  - data: pesan tidak terkirim
+
+SEND_GROUP
+* TUJUAN: untuk mengirim pesan ke grup chat
+* PARAMETER:
+  - PARAMETER1 : nama grup
+  - PARAMETER2 : pesan
+* RESULT:
+- BERHASIL:
+  - status: OK
+  - data: pesan terkirim
+- GAGAL:
+  - status: ERROR
+  - data: pesan tidak terkirim
+
+SEND_FILE
+* TUJUAN: untuk mengirim file pribadi ke pengguna lain
+* PARAMETER:
+  - PARAMETER1 : username penerima
+  - PARAMETER2 : nama file
+* RESULT:
+- BERHASIL:
+  - status: OK
+  - data: file terkirim
+- GAGAL:
+  - status: ERROR
+  - data: file tidak terkirim
+
+SEND_GROUP_FILE
+* TUJUAN: untuk mengirim file ke grup chat
+* PARAMETER:
+  - PARAMETER1 : nama grup
+  - PARAMETER2 : nama file
+* RESULT:
+- BERHASIL:
+  - status: OK
+  - data: file terkirim
+- GAGAL:
+  - status: ERROR
+  - data: file tidak terkirim
+
+REGISTER
+* TUJUAN: untuk mendaftarkan pengguna
+* PARAMETER:
+  - PARAMETER1 : username
+  - PARAMETER2 : password
+  - PARAMETER3 : negara
+  - PARAMETER4 : nama
+* RESULT
+- BERHASIL:
+  - status: OK
+  - data: registrasi berhasil
+- GAGAL:
+  - status: ERROR
+  - data: registrasi gagal
+
+ADD_REALM
+* TUJUAN: untuk menambahkan suatu realm
+* PARAMETER:
+  - PARAMETER1 : name
+  - PARAMETER2 : ip
+  - PARAMETER3 : port
+* RESULT
+- BERHASIL:
+  - status: OK
+  - data: Realm berhasil ditambahkan
+- GAGAL:
+  - status: ERROR
+  - data: ~
+
+ADD_GROUP
+* TUJUAN: untuk mendaftarkan pengguna
+* PARAMETER:
+  - PARAMETER1 : session id
+  - PARAMETER2 : group name
+* RESULT
+- BERHASIL:
+  - status: OK
+  - data: Add group successful
+- GAGAL:
+  - status: ERROR
+  - data: Session Tidak Ditemukan
+- GAGAL:
+  - status: ERROR
+  - data: Group tidak ditemukan!
+
+JOIN_GROUP
+* TUJUAN: untuk mendaftarkan pengguna
+* PARAMETER:
+  - PARAMETER1 : session id
+  - PARAMETER2 : groupname
+* RESULT
+- BERHASIL:
+  - status: OK
+  - data: Berhasil join grup
+- GAGAL:
+  - status: ERROR
+  - data: Session Tidak Ditemukan
+- GAGAL:
+  - status: ERROR
+  - data: User sudah dalam group
+
+LEAVE_GROUP
+* TUJUAN: untuk mendaftarkan pengguna
+* PARAMETER:
+  - PARAMETER1 : session id
+  - PARAMETER2 : group name
+* RESULT
+- BERHASIL:
+  - status: OK
+  - data: Berhasil leave dari grup
+- GAGAL:
+  - status: ERROR
+  - data: Session Tidak Ditemukan
+
+LIST_USERS
+* TUJUAN: untuk mendapatkan semua pengguna
+* PARAMETER: tidak ada
+* RESULT
+- BERHASIL:
+  - status: OK
+  - users: ['user1', 'user2, 'user3', ...]
+- GAGAL: tidak ada
+
+LIST_MY_GROUPS
+* TUJUAN: untuk mendaftarkan semua grup pengguna
+* PARAMETER:
+  - PARAMETER1 : session id
+* RESULT
+- BERHASIL:
+  - status: OK
+  - users: ['group1', 'group2, 'group3', ...]
+- GAGAL: tidak ada
+
+LIST_GROUP
+* TUJUAN: untuk mendapatkan semua member dalam grup
+* PARAMETER: tidak ada
+* RESULT
+- BERHASIL:
+  - status: OK
+  - groups: ['member1', 'member2, 'member3', ...]
+- GAGAL:
+  - status: ERROR
+  - data: Group tidak ditemukan
+  - status: ERROR
+  - data: Bukan anggota grup
